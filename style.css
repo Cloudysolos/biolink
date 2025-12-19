@@ -118,6 +118,15 @@ a {
     background: #111;
 }
 
+.greeting {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 11px;
+    color: #bfbfbf;
+    letter-spacing: 0.3px;
+    margin-bottom: 8px;
+}
+
 .pfp-container {
     width: 80px;
     height: 80px;
