@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const card = document.querySelector('.biolink-card');
     const audio = document.getElementById('bg-music');
     const bioText = document.getElementById('bio-text');
+    const greetingEl = document.getElementById('greeting');
     
     // --- Configuration ---
     const bioPhrases = [
@@ -25,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             card.classList.add('active');
             typeWriter(); // Start typing effect
+            setGreeting();
         }, 500);
 
         // Play Audio
@@ -60,6 +62,18 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(typeWriter, typeSpeed);
     }
 
+    function setGreeting() {
+        const h = new Date().getHours();
+        let g = 'Hello';
+        if (h < 5) g = 'Good night';
+        else if (h < 12) g = 'Good morning';
+        else if (h < 17) g = 'Good afternoon';
+        else if (h < 22) g = 'Good evening';
+        else g = 'Good night';
+        if (greetingEl) greetingEl.textContent = `${g}, Cloudy`;
+    }
+    setGreeting();
+    setInterval(setGreeting, 60 * 60 * 1000);
     // --- Discord Copy ---
     const discordBtns = [document.getElementById('discord-btn'), document.getElementById('discord-footer-btn')];
     
@@ -159,3 +173,4 @@ document.addEventListener('DOMContentLoaded', () => {
     resize();
     drawStars();
 });
+
