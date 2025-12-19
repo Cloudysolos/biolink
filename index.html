@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloudy @ biolink</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <!-- Background Canvas -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Scanlines -->
+    <div class="scanlines"></div>
+
+    <!-- Click to Enter Overlay -->
+    <div id="click-anywhere">
+        <div class="click-text">[ click to enter ]</div>
+    </div>
+
+    <!-- Hidden Audio -->
+    <audio id="bg-music" loop>
+        <source src="https://cdn.discordapp.com/attachments/1451388348634501152/1451401906655203328/SpotiDownloader.com_-_xxet_-_Luci4.flac?ex=69460adc&is=6944b95c&hm=08a29ab11ea21070fc42d650bffab1ea16419f92ba8442d04511bcdb6529c454&" type="audio/flac">
+    </audio>
+
+    <!-- Notification Container -->
+    <div id="notification-container"></div>
+
+    <!-- Main Card -->
+    <div class="biolink-card">
+        <div class="rainbow-bar"></div>
+        
+        <div class="profile-header">
+            <div class="pfp-container">
+                <img src="https://cdn.discordapp.com/attachments/1451388348634501152/1451401944080846940/W.png?ex=69460ae5&is=6944b965&hm=2004f623765eaa040f78f1140fe2a7b72aef53bb9adf6875614508104bb6cbba&" alt="Avatar" class="pfp">
+            </div>
+            
+            <div class="username">
+                Cloudy
+                <i class="fas fa-check-circle verified-icon"></i>
+            </div>
+            <span class="uid">UID: 1337</span>
+
+            <div class="badge-container">
+                <div class="badge">CODER</div>
+                <div class="badge">LUA</div>
+                <div class="badge">PYTHON</div>
+            </div>
+
+            <div class="bio-text">
+                <span id="bio-text"></span><span class="cursor"></span>
+            </div>
+        </div>
+
+        <div class="links-container">
+            <a href="https://github.com/Cloudysolos" target="_blank" class="link-btn">
+                <i class="fab fa-github"></i> GitHub
+            </a>
+            <div id="discord-btn" class="link-btn" style="cursor: pointer;"> <!-- Explicit cursor pointer override if needed, but style.css handles it -->
+                <i class="fab fa-discord"></i> Discord
+            </div>
+            <a href="https://t.me/CumShotsOfDoom" target="_blank" class="link-btn">
+                <i class="fab fa-telegram-plane"></i> Telegram
+            </a>
+        </div>
+
+        <div class="socials-footer">
+            <a href="https://www.instagram.com/cloudyhitemwithdat9/" target="_blank" class="social-link"><i class="fab fa-instagram"></i></a>
+            <div id="discord-footer-btn" class="social-link"><i class="fab fa-discord"></i></div>
+            <a href="https://t.me/CumShotsOfDoom" target="_blank" class="social-link"><i class="fab fa-telegram-plane"></i></a>
+        </div>
+    </div>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
