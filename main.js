@@ -1,142 +1,140 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const overlay = document.getElementById('click-anywhere');
-    const card = document.querySelector('.biolink-card');
-    const audio = document.getElementById('bg-music');
-    const bioText = document.getElementById('bio-text');
-    const greetingEl = document.getElementById('greeting');
+document.addEventListener('DOMContentLoaded', function(){
+    var overlay = document.getElementById('click_overlay');
+   let card = document.querySelector('.biolink-card');
     
-    // --- Configuration ---
-    const bioPhrases = [
-        "Python / LUA Coder.",
-        "IDA.",
-        "Vocal Engineer",
-        "uid: 1"
-    ];
-    let phraseIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
-    let typeSpeed = 100;
-
-    // --- Click to Enter ---
-    overlay.addEventListener('click', () => {
+    var audio = document.getElementById('bgAudio');
+     const bio_text = document.getElementById('bio-text');
+    var greeting = document.getElementById('greeting');
+    
+    var titles = ["Python / LUA Coder.", "IDA.", "Vocal Engineer", "uid: 1"];
+    
+    let pi = 0, ci = 0;
+     var is_deleting = false;
+    
+    var type_speed = 93;
+    
+    overlay.addEventListener('click', function(){
         overlay.style.opacity = '0';
-        overlay.style.pointerEvents = 'none'; // Ensure it's not clickable
+        overlay.style.pointerEvents = 'none';
         
-        // Show card with delay
-        setTimeout(() => {
+        setTimeout(function() {
             card.classList.add('active');
-            typeWriter(); // Start typing effect
+            
+             typewriter();
             setGreeting();
-        }, 500);
-
-        // Play Audio
-        if(audio) {
+        }, 512);
+        
+        if(audio){
             audio.volume = 0.3;
-            audio.play().catch(e => console.log("Audio autoplay prevented", e));
+             audio.play().catch(function(e){});
         }
     });
 
-    // --- Typewriter Effect ---
-    function typeWriter() {
-        const currentPhrase = bioPhrases[phraseIndex];
+    function typewriter(){
+        var t = titles[pi];
         
-        if (isDeleting) {
-            bioText.textContent = currentPhrase.substring(0, charIndex - 1);
-            charIndex--;
-            typeSpeed = 50;
+        if (is_deleting) {
+            bio_text.textContent = t.substring(0, ci - 1);
+            ci--;
+             type_speed = 48;
         } else {
-            bioText.textContent = currentPhrase.substring(0, charIndex + 1);
-            charIndex++;
-            typeSpeed = 100;
+             bio_text.textContent = t.substring(0, ci + 1);
+            ci++;
+            type_speed = 104;
         }
-
-        if (!isDeleting && charIndex === currentPhrase.length) {
-            isDeleting = true;
-            typeSpeed = 2000; // Pause at end
-        } else if (isDeleting && charIndex === 0) {
-            isDeleting = false;
-            phraseIndex = (phraseIndex + 1) % bioPhrases.length;
-            typeSpeed = 500; // Pause before new word
+        
+        if(!is_deleting && ci === t.length) {
+            is_deleting = true;
+            type_speed = 1950;
+        } else if(is_deleting && ci === 0) {
+            is_deleting = false;
+             pi = (pi + 1) % titles.length;
+            type_speed = 480;
         }
-
-        setTimeout(typeWriter, typeSpeed);
+        
+        setTimeout(typewriter, type_speed);
     }
-
-    function setGreeting() {
-        const h = new Date().getHours();
-        let g = 'Hello';
-        if (h < 5) g = 'Good night';
-        else if (h < 12) g = 'Good morning';
-        else if (h < 17) g = 'Good afternoon';
-        else if (h < 22) g = 'Good evening';
-        else g = 'Good night';
-        if (greetingEl) greetingEl.textContent = `${g}, Cloudy`;
-    }
-    setGreeting();
-    setInterval(setGreeting, 60 * 60 * 1000);
-    // --- Discord Copy ---
-    const discordBtns = [document.getElementById('discord-btn'), document.getElementById('discord-footer-btn')];
     
-    discordBtns.forEach(btn => {
-        if (btn) {
-            btn.addEventListener('click', () => {
-                const username = "neumanntlm103";
-                navigator.clipboard.writeText(username).then(() => {
-                    showNotification(`Copied: ${username}`);
-                }).catch(err => {
-                    console.error('Failed to copy: ', err);
-                    showNotification('Failed to copy');
-                });
+    function setGreeting() {
+        var h = new Date().getHours();
+        var msg = 'Hello';
+        
+        if(h < 5) msg = 'Good night';
+        else if(h < 12) msg = 'Good morning';
+        else if(h < 17) msg = 'Good afternoon';
+        else if(h < 22) msg = 'Good evening';
+        else msg = 'Good night';
+        
+        if (greeting) greeting.textContent = msg + ", Cloudy";
+    }
+    
+    setGreeting();
+    setInterval(setGreeting, 3600000);
+    
+    var discord_btns = [document.getElementById('discord-btn'), document.getElementById('discordBtnFooter')];
+    
+    discord_btns.forEach(function(btn){
+        if(!btn) return;
+        
+        btn.onclick = function(){
+            var user = "neumanntlm103";
+            
+            navigator.clipboard.writeText(user).then(function() {
+                 show_notification("Copied: " + user);
+            }).catch(function(e){
+                show_notification('Failed to copy');
             });
         }
     });
-
-    // --- Notification System ---
-    function showNotification(message) {
-        const container = document.getElementById('notification-container');
-        const notif = document.createElement('div');
+    
+    function show_notification(message){
+        var container = document.getElementById('notif_box');
+        var notif = document.createElement('div');
+        
         notif.className = 'notification';
         notif.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
-        
         container.appendChild(notif);
-
-        // Trigger animation
-        setTimeout(() => notif.classList.add('show'), 10);
-
-        // Remove after 3s
-        setTimeout(() => {
+        
+        setTimeout(function(){
+            notif.classList.add('show');
+        }, 15);
+        
+        setTimeout(function(){
             notif.classList.remove('show');
-            setTimeout(() => notif.remove(), 300);
-        }, 3000);
+            setTimeout(function() {
+                notif.remove();
+            }, 310);
+        }, 2900);
     }
-
-    // --- Title Scroller ---
-    let titleText = " Cloudy @ biolink ";
-    function scrollTitle() {
-        titleText = titleText.substring(1) + titleText.substring(0, 1);
-        document.title = titleText;
-        setTimeout(scrollTitle, 250);
+    
+    var title_text = " Cloudy @ biolink ";
+    
+    function scroll_title() {
+        title_text = title_text.substring(1) + title_text.substring(0, 1);
+        document.title = title_text;
+         setTimeout(scroll_title, 240);
     }
-    scrollTitle();
-
-    // --- Starfield Background ---
-    const canvas = document.getElementById('bg-canvas');
-    const ctx = canvas.getContext('2d');
+    scroll_title();
+    
+    var canvas = document.getElementById('bg_canvas');
+    var ctx = canvas.getContext('2d');
+    
     let width, height;
-    let stars = [];
-
-    function resize() {
+    var stars = [];
+    
+    window.onresize = function() {
         width = window.innerWidth;
         height = window.innerHeight;
-        canvas.width = width;
+         canvas.width = width;
         canvas.height = height;
-        initStars();
-    }
-
-    function initStars() {
+        init_stars();
+    };
+    
+    function init_stars() {
         stars = [];
-        const starCount = Math.floor((width * height) / 10000); // Sparse stars
-        for (let i = 0; i < starCount; i++) {
+        var count = Math.floor((width * height) / 10000);
+        
+        for(var i = 0; i < count; i++){
             stars.push({
                 x: Math.random() * width,
                 y: Math.random() * height,
@@ -146,19 +144,22 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     }
-
-    function drawStars() {
-        ctx.fillStyle = '#050505'; // Clear with bg color
+    
+    function draw_stars() {
+        // Use transparent fill for trails
+        ctx.fillStyle = 'rgba(5, 5, 5, 0.2)'; 
         ctx.fillRect(0, 0, width, height);
-
-        ctx.fillStyle = '#ffffff';
-        stars.forEach(star => {
+        
+        stars.forEach(function(star) {
             ctx.globalAlpha = star.opacity;
+            ctx.fillStyle = '#ffffff';
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = '#ffffff';
             ctx.beginPath();
-            ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+             ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
             ctx.fill();
-
-            // Move star
+            ctx.shadowBlur = 0; // Reset
+            
             star.y -= star.speed;
             if (star.y < 0) {
                 star.y = height;
@@ -166,11 +167,37 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         
-        requestAnimationFrame(drawStars);
+        requestAnimationFrame(draw_stars);
     }
-
-    window.addEventListener('resize', resize);
-    resize();
-    drawStars();
+    
+    window.dispatchEvent(new Event('resize'));
+    draw_stars();
+    
+    var view_count = document.getElementById('view-count');
+    
+    function update_views(){
+        var namespace = 'cloudy_biolink';
+        var key = (location.hostname + location.pathname).replace(/[^a-zA-Z0-9_.-]/g, '_');
+        var storage_key = 'viewed_' + key;
+        
+        var last_visit = Number(localStorage.getItem(storage_key) || 0);
+        var now = Date.now();
+        
+        var should_hit = now - last_visit > 43200000;
+        
+        var endpoint = should_hit ? 
+            `https://api.countapi.xyz/hit/${encodeURIComponent(namespace)}/${encodeURIComponent(key)}` : 
+            `https://api.countapi.xyz/get/${encodeURIComponent(namespace)}/${encodeURIComponent(key)}`;
+            
+        fetch(endpoint).then(function(r) {
+            return r.json();
+        }).then(function(d) {
+             if(view_count) view_count.textContent = (d && d.value) ? d.value : '--';
+            if (should_hit) localStorage.setItem(storage_key, String(now));
+        }).catch(function() {
+            if (view_count) view_count.textContent = '--';
+        });
+    }
+    
+    update_views();
 });
-
